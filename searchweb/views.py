@@ -8,7 +8,7 @@ from django.shortcuts import render
 
 
 def home(request):
-    print(request.GET) 
+    
     # Query parameters from the request
     first_name_query = request.GET.get('first_name', '')
     job_title_query = request.GET.get('job_title', '')
