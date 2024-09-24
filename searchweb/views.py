@@ -69,6 +69,8 @@ def home(request):
     })
 
 def download(request):
+    print("Download function called")  # Debugging line
+
     # Capture search query parameters from GET request
     query_params = {
         'full_name': request.GET.get('full_name', ''),
@@ -115,16 +117,21 @@ def download(request):
         'version_status'
     )
 
+    if not data_list:
+        return HttpResponse("No data available for download.")
+
     # Convert to DataFrame and export to CSV
-    df = pd.DataFrame(data_list)
+    try:
+        df = pd.DataFrame(data_list)
+        csv_buffer = io.StringIO()
+        df.to_csv(csv_buffer, index=False)
+        csv_buffer.seek(0)
 
-    # Create a CSV buffer
-    csv_buffer = io.StringIO()
-    df.to_csv(csv_buffer, index=False)
-    csv_buffer.seek(0)
+        # Prepare the response
+        response = HttpResponse(csv_buffer.getvalue(), content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="data.csv"'
+        return response
 
-    # Prepare the response
-    response = HttpResponse(csv_buffer.getvalue(), content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    except Exception as e:
+        return HttpResponse(f"Error generating CSV: {str(e)}")
 
-    return response

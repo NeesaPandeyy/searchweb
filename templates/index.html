@@ -1,7 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Person Search</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
@@ -14,7 +16,7 @@
             <form method="get" action="{% url 'home' %}">
                 <div class="search-container">
                     <div class="search-field">
-                        <label for="first_name">Full Name</label>
+                        <label for="full_name">Full Name</label>
                         <input type="text" id="full_name" name="full_name" placeholder="Enter Full Name" value="{{ request.GET.full_name }}">
                     </div>
                     <div class="search-field">
@@ -62,57 +64,199 @@
             </form>
         </div>
 
-        <!-- Check if there are any results to display -->
-        {% if total_results > 0 %}
-            <p>Total Results: {{ total_results }}</p>
+        <!-- Check if the form has been submitted and there are results to display -->
+        {% if request.GET.full_name or request.GET.job_title or request.GET.job_title_sub_role or request.GET.job_company_location_name or request.GET.industry or request.GET.location_name or request.GET.location_country or request.GET.skills or request.GET.countries or request.GET.education %}
+            {% if total_results > 0 %}
+                <p>Total Results: {{ total_results }}</p>
 
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Job Title</th>
-                        <th>Company</th>
-                        <th>Location</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Iterate over the paginated results -->
-                    {% for person in results %}
+                <table class="results-table">
+                    <thead>
                         <tr>
-                            <td>{{ person.first_name }} {{ person.last_name }}</td>
-                            <td>{{ person.job_title }}</td>
-                            <td>{{ person.job_company_name }}</td>
-                            <td>{{ person.location_name }}</td>
+                            <th>IDS</th>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>First Name</th>
+                            <th>Middle Initial</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Birth Year</th>
+                            <th>Birth Date</th>
+                            <th>LinkedIn URL</th>
+                            <th>LinkedIn Username</th>
+                            <th>LinkedIn ID</th>
+                            <th>Facebook URL</th>
+                            <th>Facebook Username</th>
+                            <th>Facebook ID</th>
+                            <th>Twitter URL</th>
+                            <th>Twitter Username</th>
+                            <th>GitHub URL</th>
+                            <th>GitHub Username</th>
+                            <th>Work Email</th>
+                            <th>Mobile Phone</th>
+                            <th>Industry</th>
+                            <th>Job Title</th>
+                            <th>Job Title Role</th>
+                            <th>Job Title Sub Role</th>
+                            <th>Job Title Levels</th>
+                            <th>Job Company ID</th>
+                            <th>Job Company Name</th>
+                            <th>Job Company Website</th>
+                            <th>Job Company Size</th>
+                            <th>Job Company Founded</th>
+                            <th>Job Company Industry</th>
+                            <th>Job Company LinkedIn URL</th>
+                            <th>Job Company LinkedIn ID</th>
+                            <th>Job Company Facebook URL</th>
+                            <th>Job Company Twitter URL</th>
+                            <th>Job Company Location Name</th>
+                            <th>Job Company Location Locality</th>
+                            <th>Job Company Location Metro</th>
+                            <th>Job Company Location Region</th>
+                            <th>Job Company Location Geo</th>
+                            <th>Job Company Location Street Address</th>
+                            <th>Job Company Location Address Line 2</th>
+                            <th>Job Company Location Postal Code</th>
+                            <th>Job Company Location Country</th>
+                            <th>Job Company Location Continent</th>
+                            <th>Job Last Updated</th>
+                            <th>Job Start Date</th>
+                            <th>Job Summary</th>
+                            <th>Location Name</th>
+                            <th>Location Locality</th>
+                            <th>Location Metro</th>
+                            <th>Location Region</th>
+                            <th>Location Country</th>
+                            <th>Location Continent</th>
+                            <th>Location Street Address</th>
+                            <th>Location Address Line 2</th>
+                            <th>Location Postal Code</th>
+                            <th>Location Geo</th>
+                            <th>Location Last Updated</th>
+                            <th>LinkedIn Connections</th>
+                            <th>Inferred Salary</th>
+                            <th>Inferred Years Experience</th>
+                            <th>Summary</th>
+                            <th>Phone Numbers</th>
+                            <th>Emails</th>
+                            <th>Interests</th>
+                            <th>Skills</th>
+                            <th>Location Names</th>
+                            <th>Regions</th>
+                            <th>Countries</th>
+                            <th>Street Addresses</th>
+                            <th>Experience</th>
+                            <th>Education</th>
+                            <th>Profiles</th>
+                            <th>Certifications</th>
+                            <th>Languages</th>
+                            <th>Version Status</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <!-- Iterate over the paginated results -->
+                        {% for person in results %}
+                            <tr>
+                                <td>{{ person.ids }}</td>
+                                <td>{{ person.id }}</td>
+                                <td>{{ person.full_name }}</td>
+                                <td>{{ person.first_name }}</td>
+                                <td>{{ person.middle_initial }}</td>
+                                <td>{{ person.middle_name }}</td>
+                                <td>{{ person.last_name }}</td>
+                                <td>{{ person.gender }}</td>
+                                <td>{{ person.birth_year }}</td>
+                                <td>{{ person.birth_date }}</td>
+                                <td>{{ person.linkedin_url }}</td>
+                                <td>{{ person.linkedin_username }}</td>
+                                <td>{{ person.linkedin_id }}</td>
+                                <td>{{ person.facebook_url }}</td>
+                                <td>{{ person.facebook_username }}</td>
+                                <td>{{ person.facebook_id }}</td>
+                                <td>{{ person.twitter_url }}</td>
+                                <td>{{ person.twitter_username }}</td>
+                                <td>{{ person.github_url }}</td>
+                                <td>{{ person.github_username }}</td>
+                                <td>{{ person.work_email }}</td>
+                                <td>{{ person.mobile_phone }}</td>
+                                <td>{{ person.industry }}</td>
+                                <td>{{ person.job_title }}</td>
+                                <td>{{ person.job_title_role }}</td>
+                                <td>{{ person.job_title_sub_role }}</td>
+                                <td>{{ person.job_title_levels }}</td>
+                                <td>{{ person.job_company_id }}</td>
+                                <td>{{ person.job_company_name }}</td>
+                                <td>{{ person.job_company_website }}</td>
+                                <td>{{ person.job_company_size }}</td>
+                                <td>{{ person.job_company_founded }}</td>
+                                <td>{{ person.job_company_industry }}</td>
+                                <td>{{ person.job_company_linkedin_url }}</td>
+                                <td>{{ person.job_company_linkedin_id }}</td>
+                                <td>{{ person.job_company_facebook_url }}</td>
+                                <td>{{ person.job_company_twitter_url }}</td>
+                                <td>{{ person.job_company_location_name }}</td>
+                                <td>{{ person.job_company_location_locality }}</td>
+                                <td>{{ person.job_company_location_metro }}</td>
+                                <td>{{ person.job_company_location_region }}</td>
+                                <td>{{ person.job_company_location_geo }}</td>
+                                <td>{{ person.job_company_location_street_address }}</td>
+                                <td>{{ person.job_company_location_address_line_2 }}</td>
+                                <td>{{ person.job_company_location_postal_code }}</td>
+                                <td>{{ person.job_company_location_country }}</td>
+                                <td>{{ person.job_company_location_continent }}</td>
+                                <td>{{ person.job_last_updated }}</td>
+                                <td>{{ person.job_start_date }}</td>
+                                <td>{{ person.job_summary }}</td>
+                                <td>{{ person.location_name }}</td>
+                                <td>{{ person.location_locality }}</td>
+                                <td>{{ person.location_metro }}</td>
+                                <td>{{ person.location_region }}</td>
+                                <td>{{ person.location_country }}</td>
+                                <td>{{ person.location_continent }}</td>
+                                <td>{{ person.location_street_address }}</td>
+                                <td>{{ person.location_address_line_2 }}</td>
+                                <td>{{ person.location_postal_code }}</td>
+                                <td>{{ person.location_geo }}</td>
+                                <td>{{ person.location_last_updated }}</td>
+                                <td>{{ person.linkedin_connections }}</td>
+                                <td>{{ person.inferred_salary }}</td>
+                                <td>{{ person.inferred_years_experience }}</td>
+                                <td>{{ person.summary }}</td>
+                                <td>{{ person.phone_numbers }}</td>
+                                <td>{{ person.emails }}</td>
+                                <td>{{ person.interests }}</td>
+                                <td>{{ person.skills }}</td>
+                                <td>{{ person.location_names }}</td>
+                                <td>{{ person.regions }}</td>
+                                <td>{{ person.countries }}</td>
+                                <td>{{ person.street_addresses }}</td>
+                                <td>{{ person.experience }}</td>
+                                <td>{{ person.education }}</td>
+                                <td>{{ person.profiles }}</td>
+                                <td>{{ person.certifications }}</td>
+                                <td>{{ person.languages }}</td>
+                                <td>{{ person.version_status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
-            <button id="id-download-button">Download</button>
-
-            <!-- Pagination Controls -->
-            <div class="pagination">
-                <span class="step-links">
+                <!-- Pagination controls -->
+                <div class="pagination">
                     {% if results.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ results.previous_page_number }}">previous</a>
+                        <a href="?page=1&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">First</a>
+                        <a href="?page={{ results.previous_page_number }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Previous</a>
                     {% endif %}
-
-                    <span class="current">
-                        Page {{ results.number }} of {{ results.paginator.num_pages }}.
-                    </span>
-
+                    <span>Page {{ results.number }} of {{ results.paginator.num_pages }}</span>
                     {% if results.has_next %}
-                        <a href="?page={{ results.next_page_number }}">next</a>
-                        <a href="?page={{ results.paginator.num_pages }}">last &raquo;</a>
+                        <a href="?page={{ results.next_page_number }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Next</a>
+                        <a href="?page={{ results.paginator.num_pages }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Last</a>
                     {% endif %}
-                </span>
-            </div>
-        {% else %}
-            <p>No results found.</p>
+                </div>
+            {% else %}
+                <p>No results found for your search.</p>
+            {% endif %}
         {% endif %}
     </div>
-
-    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
