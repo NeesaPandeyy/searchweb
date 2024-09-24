@@ -4,7 +4,7 @@ from .models import Person
 class PersonAdmin(admin.ModelAdmin):
     # Display all fields in the list view (if appropriate)
     list_display = (
-        'id', 'full_name', 'first_name', 'middle_initial', 'middle_name', 'last_name', 
+        'IDS','id', 'full_name', 'first_name', 'middle_initial', 'middle_name', 'last_name', 
         'gender', 'birth_year', 'birth_date', 'linkedin_url', 'linkedin_username', 
         'linkedin_id', 'facebook_url', 'facebook_username', 'facebook_id', 
         'twitter_url', 'twitter_username', 'github_url', 'github_username', 
