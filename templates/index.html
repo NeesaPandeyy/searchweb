@@ -1,10 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Form</title>
-    {% load static %}
+    <title>Person Search</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
@@ -17,95 +15,104 @@
                 <div class="search-container">
                     <div class="search-field">
                         <label for="first_name">Full Name</label>
-                        <input type="text" id="full_name" name="full_name" placeholder="Enter Full Name">
+                        <input type="text" id="full_name" name="full_name" placeholder="Enter Full Name" value="{{ request.GET.full_name }}">
                     </div>
                     <div class="search-field">
                         <label for="job_title">Job Title</label>
-                        <input type="text" id="job_title" name="job_title" placeholder="Enter Job Title">
+                        <input type="text" id="job_title" name="job_title" placeholder="Enter Job Title" value="{{ request.GET.job_title }}">
                     </div>
                     <div class="search-field">
                         <label for="job_title_sub_role">Job Title Sub Role</label>
-                        <input type="text" id="job_title_sub_role" name="job_title_sub_role" placeholder="Enter Job Title Sub Role">
+                        <input type="text" id="job_title_sub_role" name="job_title_sub_role" placeholder="Enter Job Title Sub Role" value="{{ request.GET.job_title_sub_role }}">
                     </div>
                     <div class="search-field">
                         <label for="job_company_location_name">Company Location</label>
-                        <input type="text" id="job_company_location_name" name="job_company_location_name" placeholder="Enter Company Location">
+                        <input type="text" id="job_company_location_name" name="job_company_location_name" placeholder="Enter Company Location" value="{{ request.GET.job_company_location_name }}">
                     </div>
                 </div>
                 <div class="search-container">
                     <div class="search-field">
                         <label for="industry">Industry</label>
-                        <input type="text" id="industry" name="industry" placeholder="Enter Industry">
+                        <input type="text" id="industry" name="industry" placeholder="Enter Industry" value="{{ request.GET.industry }}">
                     </div>
                     <div class="search-field">
                         <label for="location_name">Location Name</label>
-                        <input type="text" id="location_name" name="location_name" placeholder="Enter Location Name">
+                        <input type="text" id="location_name" name="location_name" placeholder="Enter Location Name" value="{{ request.GET.location_name }}">
                     </div>
                     <div class="search-field">
                         <label for="location_country">Location Country</label>
-                        <input type="text" id="location_country" name="location_country" placeholder="Enter Location Country">
+                        <input type="text" id="location_country" name="location_country" placeholder="Enter Location Country" value="{{ request.GET.location_country }}">
                     </div>
                     <div class="search-field">
                         <label for="skills">Skills</label>
-                        <input type="text" id="skills" name="skills" placeholder="Enter Skills">
+                        <input type="text" id="skills" name="skills" placeholder="Enter Skills" value="{{ request.GET.skills }}">
                     </div>
                 </div>
                 <div class="search-container">
                     <div class="search-field">
                         <label for="countries">Countries</label>
-                        <input type="text" id="countries" name="countries" placeholder="Enter Countries">
+                        <input type="text" id="countries" name="countries" placeholder="Enter Countries" value="{{ request.GET.countries }}">
                     </div>
                     <div class="search-field">
                         <label for="education">Education</label>
-                        <input type="text" id="education" name="education" placeholder="Enter Education">
+                        <input type="text" id="education" name="education" placeholder="Enter Education" value="{{ request.GET.education }}">
                     </div>
                 </div>
                 <input type="submit" value="Search">
             </form>
         </div>
 
-        {% if results %}
-        <div class="results-container">
-            <h2>Search Results:</h2>
-            <div class="result-count">Total Results: {{ results|length }}</div> <!-- Display count of results -->
-            <table>
+        <!-- Check if there are any results to display -->
+        {% if total_results > 0 %}
+            <p>Total Results: {{ total_results }}</p>
+
+            <table class="results-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
+                        <th>Name</th>
                         <th>Job Title</th>
-                        <th>Job Title Sub Role</th>
-                        <th>Company Location</th>
-                        <th>Industry</th>
-                        <th>Location Name</th>
-                        <th>Location Country</th>
-                        <th>Skills</th>
-                        <th>Countries</th>
-                        <th>Education</th>
+                        <th>Company</th>
+                        <th>Location</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for result in results %}
-                    <tr>
-                        <td>{{ result.id }}</td>
-                        <td>{{ result.full_name }}</td>
-                        <td>{{ result.job_title }}</td>
-                        <td>{{ result.job_title_sub_role }}</td>
-                        <td>{{ result.job_company_location_name }}</td>
-                        <td>{{ result.industry }}</td>
-                        <td>{{ result.location_name }}</td>
-                        <td>{{ result.location_country }}</td>
-                        <td>{{ result.skills }}</td>
-                        <td>{{ result.countries }}</td>
-                        <td>{{ result.education }}</td>
-                    </tr>
+                    <!-- Iterate over the paginated results -->
+                    {% for person in results %}
+                        <tr>
+                            <td>{{ person.first_name }} {{ person.last_name }}</td>
+                            <td>{{ person.job_title }}</td>
+                            <td>{{ person.job_company_name }}</td>
+                            <td>{{ person.location_name }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
             <button id="id-download-button">Download</button>
-        </div>
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if results.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ results.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ results.number }} of {{ results.paginator.num_pages }}.
+                    </span>
+
+                    {% if results.has_next %}
+                        <a href="?page={{ results.next_page_number }}">next</a>
+                        <a href="?page={{ results.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% else %}
+            <p>No results found.</p>
         {% endif %}
     </div>
+
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

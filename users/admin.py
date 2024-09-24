@@ -29,7 +29,7 @@ class PersonAdmin(admin.ModelAdmin):
 
     search_fields = ('full_name', 'last_name', 'full_name', 'work_email', 'mobile_phone')
 
-    list_filter = ('gender', 'birth_year', 'job_company_name')
+    list_filter = ('job_title', 'job_title_role', 'location_names')
 
 admin.site.register(Person, PersonAdmin)
 
