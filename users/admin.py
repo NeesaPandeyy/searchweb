@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Person
 
 class PersonAdmin(admin.ModelAdmin):
-    # Display all fields in the list view (if appropriate)
     list_display = (
         'IDS','id', 'full_name', 'first_name', 'middle_initial', 'middle_name', 'last_name', 
         'gender', 'birth_year', 'birth_date', 'linkedin_url', 'linkedin_username', 
@@ -28,10 +27,8 @@ class PersonAdmin(admin.ModelAdmin):
         'version_status'
     )
 
-    # Allow searching across multiple fields
     search_fields = ('full_name', 'last_name', 'full_name', 'work_email', 'mobile_phone')
 
-    # Filters to make it easier to find specific records
     list_filter = ('gender', 'birth_year', 'job_company_name')
 
 admin.site.register(Person, PersonAdmin)

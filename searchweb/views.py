@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from users.models import Person  # Import your Person model
+from users.models import Person  
 import io 
 import pandas as pd
 from django.http import HttpResponse
@@ -9,8 +9,7 @@ from django.shortcuts import render
 
 def home(request):
     
-    # Query parameters from the request
-    first_name_query = request.GET.get('first_name', '')
+    full_name_query = request.GET.get('full_name', '')
     job_title_query = request.GET.get('job_title', '')
     job_title_sub_role_query = request.GET.get('job_title_sub_role', '')
     job_company_location_name_query = request.GET.get('job_company_location_name', '')
@@ -21,12 +20,10 @@ def home(request):
     countries_query = request.GET.get('countries', '')
     education_query = request.GET.get('education', '')
 
-    # Base query for Person model
     query = Person.objects.all()
 
-    # Apply filters based on query parameters
-    if first_name_query:
-        query = query.filter(first_name__icontains=first_name_query)
+    if full_name_query:
+        query = query.filter(first_name__icontains=full_name_query)
     if job_title_query:
         query = query.filter(job_title__icontains=job_title_query)
     if job_title_sub_role_query:
@@ -46,19 +43,15 @@ def home(request):
     if education_query:
         query = query.filter(education__icontains=education_query)
 
-    # Fetch results
     search_results = query
 
-    # Render the results in the 'index.html' template
     return render(request, 'index.html', {'results': search_results})
 
 
 def download(request):
-    # Base query for Person model
     query = Person.objects.all()
     
-    # Query parameters for filtering (from GET request)
-    first_name_query = request.GET.get('first_name')
+    full_name_query = request.GET.get('full_name')
     job_title_query = request.GET.get('job_title')
     job_title_sub_role_query = request.GET.get('job_title_sub_role')
     job_company_location_name_query = request.GET.get('job_company_location_name')
@@ -69,9 +62,8 @@ def download(request):
     countries_query = request.GET.get('countries')
     education_query = request.GET.get('education')
     
-    # Apply filters based on query parameters
-    if first_name_query:
-        query = query.filter(first_name__icontains=first_name_query)
+    if full_name_query:
+        query = query.filter(first_name__icontains=full_name_query)
     if job_title_query:
         query = query.filter(job_title__icontains=job_title_query)
     if job_title_sub_role_query:
@@ -91,10 +83,8 @@ def download(request):
     if education_query:
         query = query.filter(education__icontains=education_query)
     
-    # Fetch filtered results
     filtered_data = query
     
-    # Create a list of dictionaries with all the required fields
     data_list = [{
         "IDS": data.IDS,
         "id": data.id,
@@ -177,19 +167,14 @@ def download(request):
         "version_status": data.version_status
     } for data in filtered_data]
     
-    # Convert the data into a pandas DataFrame
     df = pd.DataFrame(data_list)
     
-    # Create a buffer to hold the CSV data
     csv_buffer = io.StringIO()
     
-    # Write the DataFrame to the buffer as a CSV
     df.to_csv(csv_buffer, index=False)
     
-    # Set the buffer's position back to the beginning
     csv_buffer.seek(0)
     
-    # Create an HTTP response with the CSV data
     response = HttpResponse(csv_buffer, content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="data.csv"'
     

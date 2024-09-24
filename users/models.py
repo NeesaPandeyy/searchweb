@@ -1,7 +1,7 @@
 from django.db import models
 
 class Person(models.Model):
-    IDS = models.AutoField(primary_key=True)  # Auto-incrementing primary key
+    IDS = models.AutoField(primary_key=True)  
     id = models.CharField(max_length=255, null=True)
     full_name = models.CharField(max_length=255, null=True)
     first_name = models.CharField(max_length=255, null=True)
