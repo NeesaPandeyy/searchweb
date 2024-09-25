@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Person Search</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stylees.css' %}">
 </head>
 <body>
     <header>
@@ -31,8 +31,6 @@
                         <label for="job_company_location_name">Company Location</label>
                         <input type="text" id="job_company_location_name" name="job_company_location_name" placeholder="Enter Company Location" value="{{ request.GET.job_company_location_name }}">
                     </div>
-                </div>
-                <div class="search-container">
                     <div class="search-field">
                         <label for="industry">Industry</label>
                         <input type="text" id="industry" name="industry" placeholder="Enter Industry" value="{{ request.GET.industry }}">
@@ -49,8 +47,6 @@
                         <label for="skills">Skills</label>
                         <input type="text" id="skills" name="skills" placeholder="Enter Skills" value="{{ request.GET.skills }}">
                     </div>
-                </div>
-                <div class="search-container">
                     <div class="search-field">
                         <label for="countries">Countries</label>
                         <input type="text" id="countries" name="countries" placeholder="Enter Countries" value="{{ request.GET.countries }}">
@@ -60,14 +56,19 @@
                         <input type="text" id="education" name="education" placeholder="Enter Education" value="{{ request.GET.education }}">
                     </div>
                 </div>
-                <input type="submit" value="Search">
+                <input type="submit" value="Search" class="submit-button">
             </form>
         </div>
 
-        <!-- Check if the form has been submitted and there are results to display -->
         {% if request.GET.full_name or request.GET.job_title or request.GET.job_title_sub_role or request.GET.job_company_location_name or request.GET.industry or request.GET.location_name or request.GET.location_country or request.GET.skills or request.GET.countries or request.GET.education %}
             {% if total_results > 0 %}
-                <p>Total Results: {{ total_results }}</p>
+            <p class="results-count">Total Results: {{ total_results }}</p>
+
+
+                <!-- Download Button -->
+                <div>
+                    <a href="{% url 'download' %}?{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}" class="btn download-btn">Download Results</a>
+                </div>
 
                 <table class="results-table">
                     <thead>
@@ -154,10 +155,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Iterate over the paginated results -->
                         {% for person in results %}
                             <tr>
-                                <td>{{ person.ids }}</td>
+                                <td>{{ person.IDS }}</td>
                                 <td>{{ person.id }}</td>
                                 <td>{{ person.full_name }}</td>
                                 <td>{{ person.first_name }}</td>
@@ -240,21 +240,14 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
-                <!-- Pagination controls -->
+                <!-- Pagination -->
                 <div class="pagination">
-                    {% if results.has_previous %}
-                        <a href="?page=1&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">First</a>
-                        <a href="?page={{ results.previous_page_number }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Previous</a>
-                    {% endif %}
-                    <span>Page {{ results.number }} of {{ results.paginator.num_pages }}</span>
-                    {% if results.has_next %}
-                        <a href="?page={{ results.next_page_number }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Next</a>
-                        <a href="?page={{ results.paginator.num_pages }}&{% if request.GET.full_name %}full_name={{ request.GET.full_name }}&{% endif %}{% if request.GET.job_title %}job_title={{ request.GET.job_title }}&{% endif %}{% if request.GET.job_title_sub_role %}job_title_sub_role={{ request.GET.job_title_sub_role }}&{% endif %}{% if request.GET.job_company_location_name %}job_company_location_name={{ request.GET.job_company_location_name }}&{% endif %}{% if request.GET.industry %}industry={{ request.GET.industry }}&{% endif %}{% if request.GET.location_name %}location_name={{ request.GET.location_name }}&{% endif %}{% if request.GET.location_country %}location_country={{ request.GET.location_country }}&{% endif %}{% if request.GET.skills %}skills={{ request.GET.skills }}&{% endif %}{% if request.GET.countries %}countries={{ request.GET.countries }}&{% endif %}{% if request.GET.education %}education={{ request.GET.education }}&{% endif %}">Last</a>
-                    {% endif %}
+                    {% for page in paginator.page_range %}
+                        <a href="?page={{ page }}{% if request.GET.full_name %}&full_name={{ request.GET.full_name }}{% endif %}{% if request.GET.job_title %}&job_title={{ request.GET.job_title }}{% endif %}{% if request.GET.job_title_sub_role %}&job_title_sub_role={{ request.GET.job_title_sub_role }}{% endif %}{% if request.GET.job_company_location_name %}&job_company_location_name={{ request.GET.job_company_location_name }}{% endif %}{% if request.GET.industry %}&industry={{ request.GET.industry }}{% endif %}{% if request.GET.location_name %}&location_name={{ request.GET.location_name }}{% endif %}{% if request.GET.location_country %}&location_country={{ request.GET.location_country }}{% endif %}{% if request.GET.skills %}&skills={{ request.GET.skills }}{% endif %}{% if request.GET.countries %}&countries={{ request.GET.countries }}{% endif %}{% if request.GET.education %}&education={{ request.GET.education }}{% endif %}" class="page-number {% if page == paginator.number %}active{% endif %}">{{ page }}</a>
+                    {% endfor %}
                 </div>
             {% else %}
-                <p>No results found for your search.</p>
+                <p>No results found.</p>
             {% endif %}
         {% endif %}
     </div>

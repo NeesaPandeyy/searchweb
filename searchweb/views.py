@@ -117,21 +117,17 @@ def download(request):
         'version_status'
     )
 
-    if not data_list:
-        return HttpResponse("No data available for download.")
+    df = pd.DataFrame(data_list)
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer,index=False)
 
-    # Convert to DataFrame and export to CSV
-    try:
-        df = pd.DataFrame(data_list)
-        csv_buffer = io.StringIO()
-        df.to_csv(csv_buffer, index=False)
-        csv_buffer.seek(0)
+    csv_buffer.seek(0)
 
-        # Prepare the response
-        response = HttpResponse(csv_buffer.getvalue(), content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="data.csv"'
-        return response
-
-    except Exception as e:
-        return HttpResponse(f"Error generating CSV: {str(e)}")
+    response = HttpResponse(
+        csv_buffer.getvalue(),
+        content_type="text/csv"
+    )
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+    
+    return response
 
