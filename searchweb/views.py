@@ -10,7 +10,7 @@ def build_query(params):
     query = Q()
 
     if params.get('full_name'):
-        full_name = params['full_name'].split()  # Split by spaces to separate first and last names
+        full_name = params['full_name'].split()  
         if len(full_name) > 1:
             query |= Q(first_name__icontains=full_name[0]) & Q(last_name__icontains=full_name[1])
         else:
@@ -38,7 +38,6 @@ def build_query(params):
     return query
 
 def home(request):
-    # Capture search query parameters from GET request
     query_params = {
         'full_name': request.GET.get('full_name', ''),
         'job_title': request.GET.get('job_title', ''),
@@ -52,13 +51,10 @@ def home(request):
         'education': request.GET.get('education', '')
     }
 
-    # Build the query using the helper function
     query = build_query(query_params)
 
-    # Fetch the search results
     search_results = Person.objects.filter(query).order_by('IDS')
 
-    # Implement pagination
     paginator = Paginator(search_results, 100)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -69,9 +65,8 @@ def home(request):
     })
 
 def download(request):
-    print("Download function called")  # Debugging line
+    print("Download function called") 
 
-    # Capture search query parameters from GET request
     query_params = {
         'full_name': request.GET.get('full_name', ''),
         'job_title': request.GET.get('job_title', ''),
@@ -85,13 +80,10 @@ def download(request):
         'education': request.GET.get('education', '')
     }
 
-    # Build the query using the helper function
     query = build_query(query_params)
 
-    # Fetch the search results
     search_results = Person.objects.filter(query)
 
-    # Use values() to extract field data efficiently
     data_list = search_results.values(
         'IDS', 'id', 'full_name', 'first_name', 'middle_initial', 'middle_name', 'last_name', 
         'gender', 'birth_year', 'birth_date', 'linkedin_url', 'linkedin_username', 

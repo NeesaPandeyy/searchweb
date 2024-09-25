@@ -1,13 +1,13 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5; /* Softer background color */
+    background-color: #f5f5f5; 
     color: #333;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #4CAF50; /* Richer green */
+    background-color: #4CAF50; 
     color: white;
     padding: 15px;
     text-align: center;
@@ -22,143 +22,141 @@ header {
 .search-form {
     background: white;
     padding: 20px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     margin-bottom: 20px;
 }
 
 .search-container {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of fields */
-    justify-content: space-between; /* Space fields evenly */
+    flex-wrap: wrap;
+    justify-content: space-between; 
     margin-bottom: 15px;
 }
 
-/* Set width for three fields in a row */
 .search-field {
-    width: 30%; /* Set to 30% for three fields */
-    margin-bottom: 15px; /* Bottom margin for spacing */
+    width: 30%; 
+    margin-bottom: 15px;
 }
 
-/* Remove right margin from the last field in a row */
 .search-field:nth-child(3n) {
-    margin-right: 0; /* No right margin for the last field in a row */
+    margin-right: 0; 
 }
 
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #4CAF50; /* Matching label color */
+    color: #4CAF50; 
 }
 
 input[type="text"] {
     padding: 10px;
     font-size: 16px;
-    width: 100%; /* Full width */
-    box-sizing: border-box; /* Include padding and border in element's total width */
-    border: 1px solid #ddd; /* Light border */
-    border-radius: 4px; /* Rounded corners */
+    width: 100%;  
+    box-sizing: border-box;   
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
 }
 
 input[type="submit"] {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #4CAF50; /* Button color */
+    background-color: #4CAF50; 
     color: white;
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    transition: background-color 0.3s; /* Smooth transition */
+    border: none;  
+    border-radius: 4px;
+    transition: background-color 0.3s; 
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049;
 }
 .results-count {
-    font-size: 15px; /* Adjust font size */
-    font-weight: bold; /* Make the text bold */
-    color: #333; /* Dark gray color for text */
-    background-color: #f8f8f8; /* Light gray background */
-    padding: 5px 10px; /* Padding for spacing */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid #ddd; /* Light border */
-    display: inline-block; /* Keep the block inline */
-    margin-top: 10px; /* Space above the paragraph */
-    transition: background-color 0.3s; /* Smooth transition for background */
+    font-size: 15px; 
+    font-weight: bold; 
+    color: #333; 
+    background-color: #f8f8f8; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    border: 1px solid #ddd; 
+    display: inline-block; 
+    margin-top: 10px; 
+    transition: background-color 0.3s;
 }
 
 .results-count:hover {
-    background-color: #e0e0e0; /* Change background on hover */
+    background-color: #e0e0e0; 
 }
 
 
 table {
-    border-collapse: collapse; /* Merge borders */
-    width: 100%; /* Full width */
+    border-collapse: collapse; 
+    width: 100%;
     margin-top: 20px;
-    font-size: 12px; /* Font size for table */
+    font-size: 12px; 
 }
 
 th, td {
-    border: 1px solid #ddd; /* Light border */
-    padding: 8px; /* Padding for table cells */
-    text-align: left; /* Align text to the left */
+    border: 1px solid #ddd; 
+    padding: 8px; 
+    text-align: left;
 }
 
 th {
-    background-color: #4CAF50; /* Header background color */
-    color: white; /* Header text color */
+    background-color: #4CAF50; 
+    color: white; 
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2; /* Alternating row colors */
+    background-color: #f2f2f2;
 }
 
 button {
-    margin: 20px; /* Margin around button */
-    padding: 10px 30px; /* Padding inside button */
-    background-color: #4CAF50; /* Button color */
+    margin: 20px; 
+    padding: 10px 30px; 
+    background-color: #4CAF50;
     color: white;
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
+    border: none; 
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px; /* Font size for button */
-    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 16px; 
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0b7dda; /* Darker color on hover */
+    background-color: #0b7dda; 
 }
 
-/* Hide table by default */
+
 .results-container {
-    display: none; /* Initially hidden */
+    display: none; 
 }
 
 .result-count {
-    font-size: 14px; /* Font size for result count */
-    margin: 10px 0; /* Margin around result count */
+    font-size: 14px; 
+    margin: 10px 0; 
 }
 .btn {
     display: inline-block;
-    padding: 12px 24px; /* Adjust padding for size */
-    color: #ffffff; /* Text color */
-    background-color: #4CAF50; /* Green background */
+    padding: 12px 24px; 
+    color: #ffffff;
+    background-color: #4CAF50; 
     border: none;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px; 
     text-align: center;
-    text-decoration: none; /* Remove underline */
-    font-size: 16px; /* Font size */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s; 
 }
 
 .btn:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    background-color: #45a049; 
+    transform: scale(1.05); 
 }
 
 .btn:active {
-    transform: scale(0.95); /* Slightly shrink on click */
+    transform: scale(0.95); 
 }
 
